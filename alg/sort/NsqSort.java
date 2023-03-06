@@ -1,7 +1,8 @@
 package alg.sort;
 
 /*
- * Insertion, Selection, Bubble Sort
+O(n^2) time sorting algorithms
+Insertion, Selection, Bubble Sort
 */
 
 public class NsqSort {

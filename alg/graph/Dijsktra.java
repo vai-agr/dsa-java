@@ -22,6 +22,7 @@ public class Dijsktra {
             System.out.print(d+" ");
     }
 
+    //O(V^2 + E)
     public void shortestPath(int s, int[][] graph){
         dist[s] = 0;
         

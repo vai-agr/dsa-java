@@ -1,34 +1,46 @@
 package alg.sort;
 
-//works well when elements are uniformly distributed in a range
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+
+//works best when elements are uniformly distributed over a range
 public class BucketSort {
-    
-    public static void sort(int[] nums){
+    public static void sort(int[] nums, int n){
+        int maxEl = Arrays.stream(nums).max().getAsInt();
+        int minEl =  Arrays.stream(nums).min().getAsInt();
+        int div = Math.ceilDiv(maxEl - minEl, n);
 
-        int maxVal = 0, n = nums.length;
-        for(int num: nums)
-            maxVal = Math.max(maxVal, num);
-        
+        List<Integer>[] buckets = new LinkedList[n];
 
-        int[] buckets = new int[maxVal+1];
-        
-        for(int num: nums){
-            buckets[num]++;
+        for(int i=0; i<n; i++){
+            buckets[i] = new LinkedList<>();
         }
 
-        for(int i=0,j=0; i<=maxVal; i++){
-            while(buckets[i]-->0){
-                nums[j] = i;
+        //add elements to buckets
+        for(int num: nums){
+            buckets[(num-minEl)/div].add(num);
+        }
+
+        //sort each bucket
+        for(int i=0; i<n; i++){
+            Collections.sort(buckets[i]);
+        }
+
+        //enter sorted elements to original array
+        for(int i=0, j=0; i<n; i++){
+            for (int num : buckets[i]) {
+                nums[j] = num;
                 j++;
             }
         }
     }
-
     public static void main(String[] args) {
-        int[] arr = {5,7,3,8,7,4,5,0,1,5};
-        sort(arr);
-        for (int i : arr) {
-            System.out.print(i+" ");
-        }
+        int[] arr = {102, 198, 156, 123, 178, 199, 166, 143, 155, 187, 134, 123, 111, 108};
+        int n = 10;   //number of buckets
+        sort(arr, n);
+        for(int el: arr)
+            System.out.print(el + " ");
     }
 }
